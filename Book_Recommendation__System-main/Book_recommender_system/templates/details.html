@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>details</title>
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{{url_for('static',filename='styles/details.css')}}"
+    />
+  </head>
+  <body>
+    <nav class="navbar">
+      <a class="navbar-brand"><p>My Book Recommender</p></a>
+      <ul class="nav navbar-nav">
+        <li><a href="/">Home</a></li>
+        <li><a href="/recommend">Recommend</a></li>
+      </ul>
+    </nav>
+    <main class="main">
+      <div class="img-container">
+        {% set
+        img_link=details['items'][0]['volumeInfo']['imageLinks']['thumbnail'] if
+        details['items'][0]['volumeInfo']['imageLinks'] else
+        '../static/images/error.png' %}
+        <img src="{{img_link}}" alt="" />
+      </div>
+      <div class="details-container">
+        <h3 class="title">
+          {%set subtitle=details['items'][0]['volumeInfo']['subtitle'] if
+          details['items'][0]['volumeInfo']['subtitle'] else ''%}
+          {{details['items'][0]['volumeInfo']['title']+':'+subtitle}}
+        </h3>
+        <h4>
+          By:-<span
+            >{{','.join(details['items'][0]['volumeInfo']['authors'])}}</span
+          >
+        </h4>
+        <p class="description">
+          {{details['items'][0]['volumeInfo']['description']}}
+        </p>
+        <p class="ratings">
+          Page-count:-{{details['items'][0]['volumeInfo']['pageCount']}}
+        </p>
+        <p class="page_count">
+          Average-rating:-{{details['items'][0]['volumeInfo']['averageRating']}}
+        </p>
+        <div class="genres">
+          Genre:- {{",".join(details['items'][0]['volumeInfo']['categories'])}}
+        </div>
+        <p class="published_date">
+          PublishedON:- {{details['items'][0]['volumeInfo']['publishedDate']}}
+        </p>
+        <a href="{{details['items'][0]['volumeInfo']['previewLink']}}"
+          >get more info...
+        </a>
+      </div>
+    </main>
+    <h2 style="margin-top: 25px">Books you may like</h2>
+    <div class="recommendations">
+      {% if data %} {% for i in data %}
+      <div class="col-md-3" style="margin-top: 30px">
+        <div class="card">
+          <img class="card-img-top" src="{{i[2]}}" />
+          <div class="card-body">
+            <h4 class="text-white"><i>{{i[0]}}</i></h4>
+            <h6 class="text-white">{{i[1]}}</h6>
+          </div>
+        </div>
+      </div>
+
+      {% endfor %} {% endif %}
+    </div>
+  </body>
+</html>

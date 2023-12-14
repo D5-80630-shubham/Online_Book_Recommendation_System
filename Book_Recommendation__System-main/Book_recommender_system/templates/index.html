@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Book Recommender System</title>
+    <!-- Latest  and minified CSS -->
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{{url_for('static',filename='styles/index.css')}}"
+    />
+    <!--    <link-->
+    <!--      rel="stylesheet"-->
+    <!--      href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css"-->
+    <!--      integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"-->
+    <!--      crossorigin="anonymous"-->
+    <!--    />-->
+  </head>
+  <body>
+    <nav class="navbar">
+      <a class="navbar-brand"><p>My Book Recommender</p></a>
+      <ul class="nav navbar-nav">
+        <li><a href="/">Home</a></li>
+        <li><a href="/recommend">Recommend</a></li>
+      </ul>
+    </nav>
+    <div class="container">
+      <div class="heading">
+        <h2 class="text">50 most trending books...</h2>
+      </div>
+
+      <div class="row">
+        {% for i in range(book_name|length) %}
+
+        <div class="col-md-3" style="margin-top: 30px">
+          <div class="card">
+            <img class="card-img-top" src="{{ image[i] }}" />
+            <div class="card-body">
+              <h4 class="text-white title">{{ book_name[i] }}</h4>
+              <h6 class="text-white">By:-{{ author_name[i] }}</h6>
+              <h6 class="text-white">No of Votes - {{ votes[i] }}</h6>
+              <h6 class="text-white">Ranking - {{ ratings[i] }}</h6>
+              <button
+                class="text-white"
+                onclick="window.location.href=`/details/?isbn={{isbn[i]}}&name={{book_name[i]}}`"
+              >
+                More details..
+              </button>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </body>
+
+  <script type="module">
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.18.0/firebase-app.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.18.0/firebase-analytics.js";
+    // TODO: Add SDKs for Firebase products that you want to use
+    // https://firebase.google.com/docs/web/setup#available-libraries
+
+    // Your web app's Firebase configuration
+    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+    const firebaseConfig = {
+      apiKey: "AIzaSyBiX0kbJwFofcpMG-jHhcUWAV94qymL9yE",
+      authDomain: "book-recommender-system-dbd21.firebaseapp.com",
+      projectId: "book-recommender-system-dbd21",
+      storageBucket: "book-recommender-system-dbd21.appspot.com",
+      messagingSenderId: "954864197540",
+      appId: "1:954864197540:web:b53b58ec701a04532e6b31",
+      measurementId: "G-QEGW6YG22L",
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const analytics = getAnalytics(app);
+  </script>
+</html>
